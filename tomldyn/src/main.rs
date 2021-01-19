@@ -20,7 +20,7 @@ fn main() {
     );
 }
 
-// refactoring code according to the
+// refactoring code according to the rust programming langugage book
 fn read_toml(mut args: env::Args) -> Result<toml::Value, &'static str> {
     args.next();
 
@@ -34,5 +34,10 @@ fn read_toml(mut args: env::Args) -> Result<toml::Value, &'static str> {
         Err(_) => return Err("File not found"),
     };
 
-    Ok(config_text.parse::<toml::Value>().unwrap())
+    let toml_value = match config_text.parse::<toml::Value>() {
+        Ok(val) => val,
+        Err(_) => return Err("Cannot convert the value of the toml file."),
+    };
+
+    Ok(toml_value)
 }
