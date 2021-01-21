@@ -24,8 +24,8 @@ fn main() {
     // }
     // println!("{:?}", a);
 
-    let mut a: [u32; 6] = [1, 2, 3, 4, 5, 6];
-    reverse_array(&mut a, 6);
+    let mut a: [u32; 7] = [1, 2, 3, 4, 5, 6, 7];
+    reverse_array(&mut a);
     println!("array after reverse by raw pointer: {:?}", a);
 }
 
@@ -37,11 +37,11 @@ unsafe fn inplace_swap(x: *mut u32, y: *mut u32) {
 }
 
 // practice problen 2.11 from Computer System: A Programmer Perspective 
-fn reverse_array(a: &mut [u32], length: usize) {
+fn reverse_array(a: &mut [u32]) {
     let mut first: usize = 0;
-    let mut last: usize = length - 1;
+    let mut last: usize = a.len() - 1;
 
-    while first <= last {
+    while first < last {
         unsafe {
             inplace_swap(&mut a[first] as *mut u32, &mut a[last] as *mut u32);
         }
