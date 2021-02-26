@@ -1,3 +1,5 @@
+use swap_val::*;
+
 fn main() {
     // stored the values in variables
     let mut x: u32 = 53;
@@ -26,26 +28,21 @@ fn main() {
 
     let mut a: [u32; 7] = [1, 2, 3, 4, 5, 6, 7];
     reverse_array(&mut a);
-    println!("array after reverse by raw pointer: {:?}", a);
+    println!("array after reverse by raw pointer: {:?}\n", a);
+
+    // practice problem 2.12
+    let x_1: u32 = 0x87654321;
+    let _res = x_1 & 0x000000ff;
+    println!("{:08x}", _res);
+
+
+    let mut t = 5;
+    let demo = &mut t as *mut i32;
+    println!("{:?}", !t);
+    println!("{:?}", !demo);
 }
 
-// practice problem: 2.10 
-unsafe fn inplace_swap(x: *mut u32, y: *mut u32) {
-    *x = *x ^ *y;
-    *y = *x ^ *y;
-    *x = *x ^ *y
-}
 
-// practice problen 2.11 from Computer System: A Programmer Perspective 
-fn reverse_array(a: &mut [u32]) {
-    let mut first: usize = 0;
-    let mut last: usize = a.len() - 1;
 
-    while first < last {
-        unsafe {
-            inplace_swap(&mut a[first] as *mut u32, &mut a[last] as *mut u32);
-        }
-        first += 1;
-        last -= 1;
-    }
-}
+
+
