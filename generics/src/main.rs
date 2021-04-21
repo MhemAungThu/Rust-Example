@@ -1,4 +1,4 @@
-use std::ops::{Add, Sub, Mul};
+use std::ops::{Add, Mul, Sub};
 
 // rewrite the example with associative type
 struct Container(i32, i32);
@@ -14,12 +14,12 @@ trait Contains {
 
 impl Contains for Container {
     // Specify what types `A` and `B` are. if the input type
-    // is `Container(i32, i32) the output types are determined 
+    // is `Container(i32, i32) the output types are determined
     // as `i32` and `i32`
     type A = i32;
 
     // `&Self::A` and `&Self::B` are also vaild here
-    fn contains(&self ,number_1: &i32, number_2: &i32) -> bool {
+    fn contains(&self, number_1: &i32, number_2: &i32) -> bool {
         (&self.0 == number_1) && (&self.1 == number_2)
     }
 
@@ -28,7 +28,7 @@ impl Contains for Container {
         self.0
     }
 
-    // Grab the second number 
+    // Grab the second number
     fn last(&self) -> i32 {
         self.1
     }
@@ -47,5 +47,27 @@ fn main() {
     let result = difference(&container);
 
     println!("{}", result + 100_i32);
+
+    let float_result = difference(&MyContainer(3.14, 6.28));
+    println!("{}", float_result + 0.001_f64);
     println!("End!");
+}
+
+// try to implemnt in my own type
+struct MyContainer(f64, f64);
+
+impl Contains for MyContainer {
+    type A = f64;
+
+    fn contains(&self, point_1: &f64, point_2: &f64) -> bool {
+        (&self.0 == point_1) && (&self.1 == point_2)
+    }
+
+    fn first(&self) -> f64 {
+        self.0
+    }
+
+    fn last(&self) -> f64 {
+        self.1
+    }
 }
