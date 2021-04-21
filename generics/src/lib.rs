@@ -24,3 +24,5 @@ where
     // method takes ownership of both pass args, dealloc both
     fn double_drop(self, _: T){}
 }
+
+// Associated types

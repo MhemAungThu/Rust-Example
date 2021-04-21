@@ -1,16 +1,27 @@
 use generics::DoubleDrop;
 
+// rewrite the example with associative type
 struct Container(i32, i32);
 
-trait Contains<A, B> {
-    fn contains(&self, _: &A, _: &B) -> bool;
+trait Contains {
+    // define generic types here which methods will be able to utilize
+    type A;
+    type B;
+
+    fn contains(&self, _: &Self::A, _: &Self::B) -> bool;
     fn first(&self) -> i32;
     fn last(&self) -> i32;
 }
 
-// explicitly annotate type in <> bracket
-impl Contains<i32, i32> for Container {
-    fn contains(&self, number_1: &i32, number_2: &i32) -> bool {
+impl Contains for Container {
+    // Specify what types `A` and `B` are. if the input type
+    // is `Container(i32, i32) the output types are determined 
+    // as `i32` and `i32`
+    type A = i32;
+    type B = i32;
+
+    // `&Self::A` and `&Self::B` are also vaild here
+    fn contains(&self ,number_1: &i32, number_2: &i32) -> bool {
         (&self.0 == number_1) && (&self.1 == number_2)
     }
 
@@ -19,28 +30,22 @@ impl Contains<i32, i32> for Container {
         self.0
     }
 
-    // Grab the last number
+    // Grab the second number 
     fn last(&self) -> i32 {
         self.1
     }
 }
 
-// `C` contains `A` and `B`. In the light of that to express `A` and
-// `B` again in nusiance.
-fn _different<A, B, C>(container: &C) -> i32
-where
-    C: Contains<A, B>,
-{
+fn difference<C: Contains>(container: &C) -> i32 {
     container.last() - container.first()
 }
 
 fn main() {
     let _empty = generics::Empty;
-    let null = generics::Null {
+    let _null = generics::Null {
         s: String::from("hello"),
     };
-    let container = Container(5, 5);
+    let _container = Container(5, 5);
 
-    null.double_drop(container);
     println!("End!");
 }
