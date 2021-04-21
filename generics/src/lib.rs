@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 // defined two structs which one is implemented by `Debug` but other is not.
 #[derive(Debug)]
 pub struct Empty;
@@ -17,7 +19,7 @@ pub trait DoubleDrop<T> {
 // caller 'U`
 impl<T, U> DoubleDrop<T> for U
 where
-    U: Clone + Copy,
+    U: Clone + Copy + Display,
 {
     // method takes ownership of both pass args, dealloc both
     fn double_drop(self, _: T){}
