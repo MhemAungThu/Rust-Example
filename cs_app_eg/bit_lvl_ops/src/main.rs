@@ -11,13 +11,3 @@ fn main() {
     println!("(B): {:#08x}", b);
     println!("(C): {:#08x}", c);
 }
-
-
-// practice problem 2.13
-fn bits(x: i32, m: i32) -> i32 {
-     x | m
-}
-
-fn bitc(x: i32, m: i32) -> i32 {
-    x & m
-}
